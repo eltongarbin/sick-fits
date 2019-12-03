@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Sell = () => (
   <div>
     <p>Sell!</p>
