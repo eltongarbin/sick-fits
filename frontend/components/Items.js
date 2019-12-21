@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import Item from './Item';
 
-const ALL_ITEMS_QUERY = gql`
+export const ALL_ITEMS_QUERY = gql`
   query allItemsQuery {
     items {
       id
