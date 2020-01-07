@@ -43,6 +43,29 @@ const CreateItem = () => {
     setFormValues((prevState) => ({ ...prevState, [name]: val }));
   };
 
+  const uploadFile = async (e) => {
+    const { files } = e.target;
+    const data = new FormData();
+
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
+
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/eltongarbin/image/upload',
+      {
+        method: 'POST',
+        body: data
+      }
+    );
+    const file = await res.json();
+
+    setFormValues((prevState) => ({
+      ...prevState,
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url
+    }));
+  };
+
   return (
     <Form
       onSubmit={(e) => {
@@ -57,6 +80,21 @@ const CreateItem = () => {
     >
       <ErrorMessage error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
+        <label htmlFor="file">
+          Image
+          <input
+            type="file"
+            id="file"
+            name="file"
+            placeholder="Upload an image"
+            required
+            onChange={uploadFile}
+          />
+          {formValues.image && (
+            <img width="200" src={formValues.image} alt="Upload Preview" />
+          )}
+        </label>
+
         <label htmlFor="title">
           Title
           <input
