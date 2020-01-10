@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Item from './Item';
+import Pagination from './Pagination';
 
 export const ALL_ITEMS_QUERY = gql`
-  query allItemsQuery {
+  query ALL_ITEMS_QUERY {
     items {
       id
       title
@@ -30,7 +32,7 @@ const ItemsList = styled.div`
   margin: 0 auto;
 `;
 
-const Items = () => {
+const Items = ({ page }) => {
   const { data, error, loading } = useQuery(ALL_ITEMS_QUERY);
 
   if (loading) {
@@ -51,13 +53,19 @@ const Items = () => {
 
   return (
     <Center>
+      <Pagination page={page} />
       <ItemsList>
         {data.items.map((item) => (
           <Item key={item.id} item={item} />
         ))}
       </ItemsList>
+      <Pagination page={page} />
     </Center>
   );
+};
+
+Items.propTypes = {
+  page: PropTypes.number.isRequired
 };
 
 export default Items;

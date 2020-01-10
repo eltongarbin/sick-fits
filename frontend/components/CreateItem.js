@@ -7,7 +7,7 @@ import Form from './styles/Form';
 import ErrorMessage from './ErrorMessage';
 
 export const CREATE_ITEM_MUTATION = gql`
-  mutation createItem(
+  mutation CREATE_ITEM_MUTATION(
     $title: String!
     $description: String!
     $price: Int!
@@ -72,7 +72,7 @@ const CreateItem = () => {
         e.preventDefault();
         createItem({ variables: formValues }).then((res) =>
           Router.push({
-            pathname: '/title',
+            pathname: '/item',
             query: { id: res.data.createItem.id }
           })
         );

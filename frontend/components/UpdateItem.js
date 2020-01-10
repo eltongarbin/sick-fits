@@ -7,7 +7,7 @@ import Form from './styles/Form';
 import ErrorMessage from './ErrorMessage';
 
 export const SINGLE_ITEM_QUERY = gql`
-  query singleItemQuery($id: ID!) {
+  query SINGLE_ITEM_QUERY($id: ID!) {
     item(where: { id: $id }) {
       id
       title
@@ -18,7 +18,7 @@ export const SINGLE_ITEM_QUERY = gql`
 `;
 
 export const UPDATE_ITEM_MUTATION = gql`
-  mutation updateItem(
+  mutation UPDATE_ITEM_MUTATION(
     $id: ID!
     $title: String
     $description: String

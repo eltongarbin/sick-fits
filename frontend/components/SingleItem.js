@@ -27,7 +27,7 @@ const SingleItemStyles = styled.div`
 `;
 
 export const SINGLE_ITEM_QUERY = gql`
-  query singleItemQuery($id: ID!) {
+  query SINGLE_ITEM_QUERY($id: ID!) {
     item(where: { id: $id }) {
       id
       title
