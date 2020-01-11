@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import { perPage } from '../config';
 import Item from './Item';
 import Pagination from './Pagination';
 
 export const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY {
-    items {
+  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
+    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
       id
       title
       price
@@ -33,7 +34,10 @@ const ItemsList = styled.div`
 `;
 
 const Items = ({ page }) => {
-  const { data, error, loading } = useQuery(ALL_ITEMS_QUERY);
+  const { data, error, loading } = useQuery(ALL_ITEMS_QUERY, {
+    fetchPolicy: 'network-only',
+    variables: { skip: page * perPage - perPage }
+  });
 
   if (loading) {
     return (

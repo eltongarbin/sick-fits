@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import Items from '../components/Items';
 
 const Home = () => {
-  const { query } = useRouter();
+  const router = useRouter();
 
   return (
     <div>
-      <Items page={parseInt(query.page) || 1} />
+      <Items page={parseInt(router?.query.page) || 1} />
     </div>
   );
 };
