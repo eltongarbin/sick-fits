@@ -13,7 +13,7 @@ export const DELETE_ITEM_MUTATION = gql`
 `;
 
 const DeleteItem = ({ children, id }) => {
-  const [deleteItem, { loading, error }] = useMutation(DELETE_ITEM_MUTATION, {
+  const [deleteItem] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
     update(cache, payload) {
       const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
