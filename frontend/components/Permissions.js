@@ -4,9 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 
 import ErrorMessage from './ErrorMessage';
 import Table from './styles/Table';
-import SickButton from './styles/SickButton';
+import PermissionsRow from './PermissionsRow';
 
-const possiblePermissions = [
+export const possiblePermissions = [
   'ADMIN',
   'USER',
   'ITEMCREATE',
@@ -25,25 +25,6 @@ const ALL_USERS_QUERY = gql`
     }
   }
 `;
-
-const TableRow = ({ user }) => {
-  return (
-    <tr>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      {possiblePermissions.map((permission) => (
-        <td>
-          <label htmlFor={`${user.id}-permission-${permission}`}>
-            <input type="checkbox" />
-          </label>
-        </td>
-      ))}
-      <td>
-        <SickButton>Update</SickButton>
-      </td>
-    </tr>
-  );
-};
 
 const Permissions = () => {
   const { data, loading, error } = useQuery(ALL_USERS_QUERY);
@@ -66,7 +47,7 @@ const Permissions = () => {
           </thead>
           <tbody>
             {data?.users.map((user) => (
-              <TableRow key={user.id} user={user} />
+              <PermissionsRow key={user.id} user={user} />
             ))}
           </tbody>
         </Table>
