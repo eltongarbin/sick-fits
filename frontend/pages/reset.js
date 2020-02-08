@@ -4,13 +4,10 @@ import { useRouter } from 'next/router';
 import Reset from '../components/Reset';
 
 const ResetPage = () => {
-  const { query } = useRouter();
+  const router = useRouter();
+  const resetToken = router?.query.resetToken;
 
-  return (
-    <div>
-      <Reset resetToken={query.resetToken} />
-    </div>
-  );
+  return <div>{resetToken && <Reset resetToken={resetToken} />}</div>;
 };
 
 export default ResetPage;
