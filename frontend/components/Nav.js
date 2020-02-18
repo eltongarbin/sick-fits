@@ -1,14 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
+import { useMutation } from '@apollo/react-hooks';
 
 import NavStyles from './styles/NavStyles';
 import useCurrentUserQuery from './hooks/useCurrentUserQuery';
 import Signout from './Signout';
+import { TOGGLE_CART_MUTATION } from './Cart';
 
 const Nav = () => {
   const { data } = useCurrentUserQuery({
     fetchPolicy: 'network-only'
   });
+  const [toggleCart] = useMutation(TOGGLE_CART_MUTATION);
 
   return (
     <NavStyles>
@@ -27,6 +30,7 @@ const Nav = () => {
             <a>Account</a>
           </Link>
           <Signout />
+          <button onClick={toggleCart}>My Cart</button>
         </>
       )}
       {!data?.me && (

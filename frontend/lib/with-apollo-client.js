@@ -1,7 +1,7 @@
 // https://gist.github.com/immortalx/655392a140dba5fa50ac026b1fda28d7#file-with-apollo-client-js
 import React, { Component } from 'react';
 import Head from 'next/head';
-import initApollo from './init-apollo';
+import initApolloClient from './init-apollo';
 
 export default function withApolloClient(App) {
   return class Apollo extends React.Component {
@@ -16,7 +16,7 @@ export default function withApolloClient(App) {
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo();
+      const apollo = initApolloClient();
       if (!process.browser) {
         try {
           const { getDataFromTree } = await import('@apollo/react-ssr');
@@ -52,7 +52,7 @@ export default function withApolloClient(App) {
 
     constructor(props) {
       super(props);
-      this.apolloClient = initApollo(props.apolloState);
+      this.apolloClient = initApolloClient(props.apolloState);
     }
 
     render() {

@@ -5,18 +5,24 @@ import { HttpLink } from 'apollo-link-http';
 import fetch from 'isomorphic-unfetch';
 
 import { endpoint, prodEndpoint } from '../config';
+import { resolvers, typeDefs } from './resolvers';
 
 let apolloClient = null;
+
+// Polyfill fetch() on the server (used by apollo-client)
+if (!process.browser) {
+  global.fetch = fetch;
+}
 
 /**
  * Creates and configures the ApolloClient
  * @param  {Object} [initialState={}]
  */
-function createApolloClient(initialState = {}) {
+function createApolloClient(_initialState = {}) {
   const isBrowser = typeof window !== 'undefined';
-
+  const cache = new InMemoryCache();
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
-  return new ApolloClient({
+  const client = new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
     link: new HttpLink({
@@ -25,8 +31,17 @@ function createApolloClient(initialState = {}) {
       // Use fetch() polyfill on the server
       fetch: !isBrowser && fetch
     }),
-    cache: new InMemoryCache().restore(initialState)
+    cache,
+    typeDefs,
+    resolvers
   });
+  const data = { cartOpen: false };
+
+  cache.writeData({ data });
+
+  client.onResetStore(() => cache.writeData({ data }));
+
+  return client;
 }
 
 /**
