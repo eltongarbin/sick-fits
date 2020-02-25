@@ -27,7 +27,28 @@ const BigButton = styled.button`
 const RemoveFromCart = ({ id }) => {
   const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
     variables: { id },
-    refetchQueries: [{ query: CURRENT_USER_QUERY }]
+    optimisticResponse: {
+      __typename: 'Mutation',
+      removeFromCart: {
+        __typename: 'CartItem',
+        id
+      }
+    },
+    update: (cache, payload) => {
+      const data = cache.readQuery({ query: CURRENT_USER_QUERY });
+      const cartItemId = payload.data.removeFromCart.id;
+
+      cache.writeQuery({
+        query: CURRENT_USER_QUERY,
+        data: {
+          ...data,
+          me: {
+            ...data.me,
+            cart: data.me.cart.filter((cartItem) => cartItem.id !== cartItemId)
+          }
+        }
+      });
+    }
   });
 
   return (
