@@ -167,6 +167,34 @@ const Mutations = {
       },
       info
     );
+  },
+  async addToCart(_parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) throw new Error('You must be signed in soon');
+
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: { user: { id: userId }, item: { id: args.id } }
+    });
+
+    if (existingCartItem) {
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 }
+        },
+        info
+      );
+    }
+
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: { connect: { id: userId } },
+          item: { connect: { id: args.id } }
+        }
+      },
+      info
+    );
   }
 };
 
