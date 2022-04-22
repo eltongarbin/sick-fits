@@ -4,10 +4,10 @@ import { useMutation } from "@apollo/client";
 import useForm from "../lib/useForm";
 import Form from "./styles/Form";
 import DisplayError from "./ErrorMessage";
+import { ALL_PRODUCTS_QUERY } from "./Products";
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
-    # wich variables are getting passed in? And What types are they
     $name: String!
     $description: String!
     $price: Int!
@@ -41,6 +41,7 @@ export default function CreateProduct() {
     CREATE_PRODUCT_MUTATION,
     {
       variables: inputs,
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     }
   );
 
