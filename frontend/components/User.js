@@ -6,6 +6,7 @@ export const CURRENT_USER_QUERY = gql`
       ... on User {
         id
         email
+        name
         # TODO: Query the cart once we have it
       }
     }
