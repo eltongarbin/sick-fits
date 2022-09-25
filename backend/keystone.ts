@@ -65,7 +65,6 @@ export default withAuth(
     ui: {
       // Show the UI only for people who pass this test
       isAccessAllowed: ({ session }) => {
-        // console.log(session);
         return Boolean(session?.data);
       },
     },
