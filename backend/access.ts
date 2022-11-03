@@ -20,6 +20,20 @@ export const rules = {
 
     return { user: { id: session.itemId } };
   },
+  canOrder({ session }: ListAccessArgs) {
+    if (permissions.canManageCart({ session })) {
+      return true;
+    }
+
+    return { user: { id: session.itemId } };
+  },
+  canManageOrderItems({ session }: ListAccessArgs) {
+    if (permissions.canManageCart({ session })) {
+      return true;
+    }
+
+    return { order: { user: { id: session.itemId } } };
+  },
   canReadProducts({ session }: ListAccessArgs) {
     if (permissions.canManageProducts({ session })) {
       return true;
