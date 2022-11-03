@@ -6,6 +6,7 @@ import {
 } from "@keystone-next/keystone/session";
 import "dotenv/config";
 
+import { Role } from "./schemas/Role";
 import { User } from "./schemas/User";
 import { Product } from "./schemas/Product";
 import { ProductImage } from "./schemas/ProductImage";
@@ -66,6 +67,7 @@ export default withAuth(
       CartItem,
       OrderItem,
       Order,
+      Role,
     }),
     extendGraphqlSchema,
     ui: {
