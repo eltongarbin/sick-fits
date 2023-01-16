@@ -5,7 +5,7 @@ import Form from "./styles/Form";
 import Error from "./ErrorMessage";
 import useForm from "../lib/useForm";
 
-const REQUEST_RESET_MUTATION = gql`
+export const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
     sendUserPasswordResetLink(email: $email) {
       code
@@ -40,6 +40,7 @@ export default function RequestReset() {
         <label htmlFor="email">
           Email
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="Your Email Address"

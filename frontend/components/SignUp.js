@@ -6,7 +6,7 @@ import Error from "./ErrorMessage";
 import useForm from "../lib/useForm";
 import { CURRENT_USER_QUERY } from "./User";
 
-const SIGNUP_MUTATION = gql`
+export const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
     $email: String!
     $name: String!
@@ -51,6 +51,7 @@ export default function SignUp() {
         <label htmlFor="email">
           Email
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="Your Email Address"
@@ -62,6 +63,7 @@ export default function SignUp() {
         <label htmlFor="name">
           Name
           <input
+            id="name"
             type="text"
             name="name"
             placeholder="Your Name"
@@ -73,6 +75,7 @@ export default function SignUp() {
         <label htmlFor="password">
           Password
           <input
+            id="password"
             type="password"
             name="password"
             placeholder="Password"

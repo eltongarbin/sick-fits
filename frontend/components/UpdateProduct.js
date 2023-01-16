@@ -1,13 +1,11 @@
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
-import Router from "next/router";
 
 import useForm from "../lib/useForm";
 import Form from "./styles/Form";
 import DisplayError from "./ErrorMessage";
-import { ALL_PRODUCTS_QUERY } from "./Products";
 
-const SINGLE_PRODUCT_QUERY = gql`
+export const SINGLE_PRODUCT_QUERY = gql`
   query SINGLE_PRODUCT_QUERY($id: ID!) {
     Product(where: { id: $id }) {
       name
