@@ -6,8 +6,8 @@ import { perPage } from '../config';
 import Product from './Product';
 
 export const ALL_PRODUCTS_QUERY = gql`
-  query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
-    allProducts(first: $first, skip: $skip) {
+  query ALL_PRODUCTS_QUERY($skip: Int = 0, $take: Int) {
+    products(take: $take, skip: $skip) {
       id
       name
       price
@@ -32,7 +32,7 @@ export default function Products({ page }) {
   const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
     variables: {
       skip: page * perPage - perPage,
-      first: perPage,
+      take: perPage,
     },
   });
 
@@ -42,7 +42,7 @@ export default function Products({ page }) {
   return (
     <div>
       <ProductsListStyles>
-        {data.allProducts.map((product) => (
+        {data.products.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </ProductsListStyles>

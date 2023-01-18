@@ -1,16 +1,23 @@
-import { integer, relationship, select, text } from "@keystone-next/fields";
-import { list } from "@keystone-next/keystone/schema";
-import { isSignedIn, rules } from "../access";
+import { integer, select, text, relationship } from "@keystone-6/core/fields";
+import { list } from "@keystone-6/core";
+import { allOperations, allowAll } from "@keystone-6/core/access";
+
+import { rules, isSignedIn } from "../access";
 
 export const Product = list({
   access: {
-    create: isSignedIn,
-    read: rules.canReadProducts,
-    update: rules.canManageProducts,
-    delete: rules.canManageProducts,
+    operation: {
+      ...allOperations(allowAll),
+      create: isSignedIn,
+    },
+    filter: {
+      query: rules.canReadProducts,
+      update: rules.canManageProducts,
+      delete: rules.canManageProducts,
+    },
   },
   fields: {
-    name: text({ isRequired: true }),
+    name: text({ validation: { isRequired: true } }),
     description: text({
       ui: {
         displayMode: "textarea",
@@ -40,9 +47,19 @@ export const Product = list({
     price: integer(),
     user: relationship({
       ref: "User.products",
-      defaultValue: ({ context }) => ({
-        connect: { id: context.session.itemId },
-      }),
+      hooks: {
+        resolveInput({ operation, resolvedData, context }) {
+          // Default to the currently logged in user on create.
+          if (
+            operation === "create" &&
+            !resolvedData.user &&
+            context.session?.itemId
+          ) {
+            return { connect: { id: context.session?.itemId } };
+          }
+          return resolvedData.user;
+        },
+      },
     }),
   },
 });

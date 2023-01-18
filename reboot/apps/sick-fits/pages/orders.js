@@ -10,7 +10,7 @@ import formatMoney from '../lib/formatMoney';
 
 const USER_ORDER_QUERY = gql`
   query USER_ORDER_QUERY {
-    allOrders {
+    orders {
       id
       charge
       total
@@ -49,16 +49,16 @@ export default function OrdersPage() {
   if (loading) return <p>Loading...</p>;
   if (error) return <ErrorMessage error={error} />;
 
-  const { allOrders } = data;
+  const { orders } = data;
 
   return (
     <div>
       <Head>
-        <title>Your Orders ({allOrders.length})</title>
+        <title>Your Orders ({orders.length})</title>
       </Head>
-      <h2>You have {allOrders.length} orders!</h2>
+      <h2>You have {orders.length} orders!</h2>
       <OrderUl>
-        {allOrders.map((order) => (
+        {orders.map((order) => (
           <OrderItemStyles key={order.id}>
             <Link href={`/order/${order.id}`}>
               <div className="order-meta">

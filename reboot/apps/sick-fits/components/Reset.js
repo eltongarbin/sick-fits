@@ -8,8 +8,8 @@ import Error from './ErrorMessage';
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
     $email: String!
-    $password: String!
     $token: String!
+    $password: String!
   ) {
     redeemUserPasswordResetToken(
       email: $email
@@ -25,8 +25,8 @@ const RESET_MUTATION = gql`
 export default function Reset({ token }) {
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
-    password: '',
     token,
+    password: '',
   });
   const [reset, { data, error }] = useMutation(RESET_MUTATION, {
     variables: inputs,

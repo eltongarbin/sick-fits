@@ -1,6 +1,7 @@
 import { createTransport, getTestMessageUrl } from "nodemailer";
 
 const transport = createTransport({
+  // @ts-ignore
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
   auth: {
@@ -39,16 +40,16 @@ export async function sendPasswordResetEmail(
   resetToken: string,
   to: string
 ): Promise<void> {
-  const info = (await transport.sendMail({
+  const info = await transport.sendMail({
     to,
     from: "test@example.com",
     subject: "Your password reset token!",
     html: makeANiceEmail(`Your Password Reset Token is here!
       <a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}">Click Here to reset</a>
     `),
-  })) as MailResponse;
+  });
 
-  if (process.env.MAIL_USER.includes("ethereal.email")) {
+  if (process.env.MAIL_USER?.includes("ethereal.email")) {
     console.log(`💌 Message Sent! Preview it at ${getTestMessageUrl(info)}`);
   }
 }

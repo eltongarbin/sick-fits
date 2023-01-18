@@ -1,37 +1,37 @@
-import casual from "casual";
-import { PAGINATION_QUERY } from "../components/Pagination";
+import casual from 'casual';
+import { PAGINATION_QUERY } from '../components/Pagination';
 
 // seed it so we get consistent results
 casual.seed(777);
 
 const fakeItem = () => ({
   // __typename: 'Item',
-  id: "abc123",
+  id: 'abc123',
   price: 5000,
   user: null,
   photo: {
     image: {
-      publicUrlTransformed: "dog.jpg",
+      publicUrlTransformed: 'dog.jpg',
     },
-    altText: "dogs are best",
+    altText: 'dogs are best',
   },
-  name: "dogs are best",
-  description: "dogs",
+  name: 'dogs are best',
+  description: 'dogs',
 });
 
 const fakeUser = (overrides) => ({
-  __typename: "User",
-  id: "4234",
+  __typename: 'User',
+  id: '4234',
   name: casual.name,
   email: casual.email,
-  permissions: ["ADMIN"],
+  permissions: ['ADMIN'],
   orders: [],
   cart: [],
   ...overrides,
 });
 
 const fakeOrderItem = () => ({
-  __typename: "OrderItem",
+  __typename: 'OrderItem',
   id: casual.uuid,
   image: {
     image: `${casual.word}.jpg`,
@@ -43,18 +43,18 @@ const fakeOrderItem = () => ({
 });
 
 const fakeOrder = () => ({
-  __typename: "Order",
-  id: "ord123",
-  charge: "ch_123",
+  __typename: 'Order',
+  id: 'ord123',
+  charge: 'ch_123',
   total: 40000,
   items: [fakeOrderItem(), fakeOrderItem()],
-  createdAt: "2022-12-11T20:16:13.797Z",
+  createdAt: '2022-12-11T20:16:13.797Z',
   user: fakeUser(),
 });
 
 const fakeCartItem = (overrides) => ({
-  __typename: "CartItem",
-  id: "omg123",
+  __typename: 'CartItem',
+  id: 'omg123',
   quantity: 3,
   product: fakeItem(),
   user: fakeUser(),
@@ -90,16 +90,7 @@ function makePaginationMocksFor(length) {
       request: { query: PAGINATION_QUERY },
       result: {
         data: {
-          _allProductsMeta: {
-            count: length,
-          },
-          itemsConnection: {
-            __typename: "aggregate",
-            aggregate: {
-              count: length,
-              __typename: "count",
-            },
-          },
+          productsCount: length,
         },
       },
     },

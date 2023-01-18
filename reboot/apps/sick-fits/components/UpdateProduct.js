@@ -7,7 +7,7 @@ import DisplayError from './ErrorMessage';
 
 export const SINGLE_PRODUCT_QUERY = gql`
   query SINGLE_PRODUCT_QUERY($id: ID!) {
-    Product(where: { id: $id }) {
+    product(where: { id: $id }) {
       id
       name
       description
@@ -24,7 +24,7 @@ const UPDATE_PRODUCT_MUTATION = gql`
     $price: Int
   ) {
     updateProduct(
-      id: $id
+      where: { id: $id }
       data: { name: $name, description: $description, price: $price }
     ) {
       id
@@ -42,7 +42,7 @@ export default function UpdateProduct({ id }) {
   const [updateProduct, { error: updateError, loading: updateLoading }] =
     useMutation(UPDATE_PRODUCT_MUTATION);
   const { inputs, handleChange } = useForm(
-    data?.Product || {
+    data?.product || {
       name: '',
       description: '',
       price: '',
