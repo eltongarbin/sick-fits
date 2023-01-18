@@ -1,5 +1,5 @@
-import { KeystoneContext } from "@keystone-6/core/types";
-import { products } from "./data";
+import { KeystoneContext } from '@keystone-6/core/types';
+import { products } from './data';
 
 export async function insertSeedData({ prisma }: KeystoneContext) {
   console.log(`🌱 Inserting Seed Data: ${products.length} Products`);

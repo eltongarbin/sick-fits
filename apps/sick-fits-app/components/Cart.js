@@ -4,7 +4,7 @@ import CloseButton from './styles/CloseButton';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import { useUser } from './User';
-import formatMoney from './../lib/formatMoney';
+import formatMoney from '../lib/formatMoney';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import { useCart } from '../lib/cartState';
 import RemoveFromCart from './RemoveFromCart';

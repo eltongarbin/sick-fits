@@ -1,8 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint",
+    "nrwl.angular-console",
     "esbenp.prettier-vscode",
-    "graphql.vscode-graphql",
-    "styled-components.vscode-styled-components"
+    "firsttris.vscode-jest-runner",
+    "dbaeumer.vscode-eslint"
   ]
 }

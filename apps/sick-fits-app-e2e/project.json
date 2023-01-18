@@ -1,19 +1,19 @@
 {
-  "name": "sick-fits-e2e",
+  "name": "sick-fits-app-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/sick-fits-e2e/src",
+  "sourceRoot": "apps/sick-fits-app-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/sick-fits-e2e/cypress.config.ts",
-        "devServerTarget": "sick-fits:serve:development",
+        "cypressConfig": "apps/sick-fits-app-e2e/cypress.config.ts",
+        "devServerTarget": "sick-fits-app:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "sick-fits:serve:production"
+          "devServerTarget": "sick-fits-app:serve:production"
         }
       }
     },
@@ -21,10 +21,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/sick-fits-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/sick-fits-app-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["sick-fits"]
+  "implicitDependencies": ["sick-fits-app"]
 }

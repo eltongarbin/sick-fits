@@ -1,7 +1,7 @@
 {
-  "name": "sick-fits",
+  "name": "sick-fits-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/sick-fits",
+  "sourceRoot": "apps/sick-fits-app",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,12 +9,12 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "root": "apps/sick-fits",
-        "outputPath": "dist/apps/sick-fits"
+        "root": "apps/sick-fits-app",
+        "outputPath": "dist/apps/sick-fits-app"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/sick-fits"
+          "outputPath": "apps/sick-fits-app"
         },
         "production": {}
       }
@@ -23,16 +23,17 @@
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "sick-fits:build",
-        "dev": true
+        "buildTarget": "sick-fits-app:build",
+        "dev": true,
+        "proxyConfig": "apps/sick-fits-app/proxy.conf.json"
       },
       "configurations": {
         "development": {
-          "buildTarget": "sick-fits:build:development",
+          "buildTarget": "sick-fits-app:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "sick-fits:build:production",
+          "buildTarget": "sick-fits-app:build:production",
           "dev": false
         }
       }
@@ -40,14 +41,14 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "sick-fits:build:production"
+        "buildTarget": "sick-fits-app:build:production"
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/sick-fits/jest.config.ts",
+        "jestConfig": "apps/sick-fits-app/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -55,7 +56,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/sick-fits/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/sick-fits-app/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
