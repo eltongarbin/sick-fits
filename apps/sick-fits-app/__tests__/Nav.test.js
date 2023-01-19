@@ -52,7 +52,7 @@ describe('<Nav />', () => {
       </CartStateProvider>
     );
 
-    await screen.findByText('Account');
+    await screen.findByText('Orders');
     expect(container.firstChild).toMatchSnapshot();
     expect(screen.getByText('Sign Out')).toBeInTheDocument();
     expect(screen.getByText('My Cart')).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('<Nav />', () => {
       </CartStateProvider>
     );
 
-    await screen.findByText('Account');
+    await screen.findByText('Orders');
     expect(screen.getByText('3')).toBeInTheDocument();
   });
 });

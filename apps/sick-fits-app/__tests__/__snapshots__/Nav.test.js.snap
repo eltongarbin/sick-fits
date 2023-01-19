@@ -19,11 +19,6 @@ exports[`<Nav /> renders and full nav when signed in 1`] = `
   >
     Orders
   </a>
-  <a
-    href="/account"
-  >
-    Account
-  </a>
   <button
     type="button"
   >
