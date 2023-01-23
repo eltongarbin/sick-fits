@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import Nav from '../components/Nav';
+import { Nav } from '../components/Nav';
 import { CURRENT_USER_QUERY } from '../components/User';
 import { fakeUser, fakeCartItem } from '../lib/testUtils';
 import { CartStateProvider } from '../lib/cartState';

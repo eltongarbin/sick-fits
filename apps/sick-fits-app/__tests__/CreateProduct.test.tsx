@@ -3,7 +3,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 import Router from 'next/router';
 
-import CreateProduct, {
+import {
+  CreateProduct,
   CREATE_PRODUCT_MUTATION,
 } from '../components/CreateProduct';
 import { ALL_PRODUCTS_QUERY } from '../components/Products';

@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
+import { SyntheticEvent } from 'react';
 
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import DisplayError from './ErrorMessage';
+import { useForm } from '../lib/useForm';
+import { Form } from './styles/Form';
+import { ErrorMessage } from './ErrorMessage';
 
 export const SINGLE_PRODUCT_QUERY = gql`
   query SINGLE_PRODUCT_QUERY($id: ID!) {
@@ -35,7 +36,11 @@ const UPDATE_PRODUCT_MUTATION = gql`
   }
 `;
 
-export default function UpdateProduct({ id }) {
+type UpdateProductProps = {
+  id: string;
+};
+
+export const UpdateProduct = ({ id }: UpdateProductProps) => {
   const { data, error, loading } = useQuery(SINGLE_PRODUCT_QUERY, {
     variables: { id },
   });
@@ -49,22 +54,22 @@ export default function UpdateProduct({ id }) {
     }
   );
 
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    await updateProduct({
+      variables: {
+        id,
+        ...inputs,
+      },
+    }).catch(console.error);
+  };
+
   if (loading) return <p>Loading...</p>;
 
   return (
-    <Form
-      onSubmit={async (e) => {
-        e.preventDefault();
-
-        await updateProduct({
-          variables: {
-            id,
-            ...inputs,
-          },
-        }).catch(console.error);
-      }}
-    >
-      <DisplayError error={error || updateError} />
+    <Form onSubmit={handleSubmit}>
+      <ErrorMessage error={error || updateError} />
       <fieldset disabled={updateLoading} aria-busy={updateLoading}>
         <label htmlFor="name">
           Name
@@ -103,4 +108,4 @@ export default function UpdateProduct({ id }) {
       </fieldset>
     </Form>
   );
-}
+};

@@ -1,42 +1,45 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-export default function useForm(initial = {}) {
+export const useForm = (initial = {}) => {
   const [inputs, setInputs] = useState(initial);
-  const initialValues = Object.values(initial).join('');
+  // const initialValues = useMemo(
+  //   () => Object.values(initial).join(''),
+  //   [initial]
+  // );
 
-  useEffect(() => {
-    setInputs(initial);
-  }, [initial, initialValues]);
+  // useEffect(() => {
+  //   setInputs(initial);
+  // }, [initialValues]);
 
-  function handleChange(e) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name, type } = e.target;
-    let newValue = value;
+    let newValue;
 
     if (type === 'number') {
       newValue = parseInt(value);
-    }
-
-    if (type === 'file') {
-      [newValue] = e.target.files;
+    } else if (type === 'file') {
+      newValue = e.target.files?.item(0);
+    } else {
+      newValue = value;
     }
 
     setInputs({
       ...inputs,
       [name]: newValue,
     });
-  }
+  };
 
-  function resetForm() {
+  const resetForm = () => {
     setInputs(initial);
-  }
+  };
 
-  function clearForm() {
+  const clearForm = () => {
     const blankState = Object.fromEntries(
       Object.entries(inputs).map(([key]) => [key, ''])
     );
 
     setInputs(blankState);
-  }
+  };
 
   return { inputs, handleChange, resetForm, clearForm };
-}
+};

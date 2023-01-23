@@ -6,7 +6,7 @@ exports[`<CartCount /> matches snapshot 1`] = `
 >
   <div>
     <div
-      class="sc-bcXHqe ihsmzp count"
+      class="sc-bcXHqe hhKHdx count"
     >
       11
     </div>
@@ -20,12 +20,12 @@ exports[`<CartCount /> updates via props 1`] = `
 >
   <div>
     <div
-      class="sc-bcXHqe ihsmzp count count-enter count-enter-active"
+      class="sc-bcXHqe hhKHdx count count-enter count-enter-active"
     >
       12
     </div>
     <div
-      class="sc-bcXHqe ihsmzp count count-exit count-exit-active"
+      class="sc-bcXHqe hhKHdx count count-exit count-exit-active"
     >
       11
     </div>

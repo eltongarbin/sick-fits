@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import Cart from './Cart';
-import Nav from './Nav';
-import Search from './Search';
+import { Cart } from './Cart';
+import { Nav } from './Nav';
+import { Search } from './Search';
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -37,19 +37,17 @@ const HeaderStyles = styled.header`
   }
 `;
 
-export default function Header() {
-  return (
-    <HeaderStyles>
-      <div className="bar">
-        <Logo>
-          <Link href="/">Sick fits</Link>
-        </Logo>
-        <Nav />
-      </div>
-      <div className="sub-bar">
-        <Search />
-      </div>
-      <Cart />
-    </HeaderStyles>
-  );
-}
+export const Header = () => (
+  <HeaderStyles>
+    <div className="bar">
+      <Logo>
+        <Link href="/">Sick fits</Link>
+      </Logo>
+      <Nav />
+    </div>
+    <div className="sub-bar">
+      <Search />
+    </div>
+    <Cart />
+  </HeaderStyles>
+);

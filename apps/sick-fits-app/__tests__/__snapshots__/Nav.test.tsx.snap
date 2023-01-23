@@ -2,7 +2,7 @@
 
 exports[`<Nav /> renders and full nav when signed in 1`] = `
 <ul
-  class="sc-dkrFOg eLNRpa"
+  class="sc-dkrFOg gRfOOC"
 >
   <a
     href="/products"
@@ -33,7 +33,7 @@ exports[`<Nav /> renders and full nav when signed in 1`] = `
     >
       <div>
         <div
-          class="sc-bcXHqe ihsmzp count"
+          class="sc-bcXHqe hhKHdx count"
         >
           0
         </div>

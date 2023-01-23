@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { GraphQLError } from 'graphql';
 
-import SingleProduct, { SINGLE_ITEM_QUERY } from '../components/SingleProduct';
+import { SingleProduct, SINGLE_ITEM_QUERY } from '../components/SingleProduct';
 import { fakeItem } from '../lib/testUtils';
 
 const product = fakeItem();

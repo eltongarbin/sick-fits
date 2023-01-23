@@ -2,7 +2,7 @@
 
 exports[`<SignUp /> renders and matches snapshot 1`] = `
 <form
-  class="sc-bcXHqe gWKOOm"
+  class="sc-bcXHqe cYSsYe"
   method="POST"
 >
   <h2>

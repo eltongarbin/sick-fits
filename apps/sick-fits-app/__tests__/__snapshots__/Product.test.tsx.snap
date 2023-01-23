@@ -2,14 +2,14 @@
 
 exports[`<Product /> renders and matches the snapshot 1`] = `
 <div
-  class="sc-bcXHqe iBgyww"
+  class="sc-bcXHqe ktwdTW"
 >
   <img
     alt="dogs are best"
     src="dog.jpg"
   />
   <h3
-    class="sc-gswNZR hIyuF"
+    class="sc-gswNZR gKHGVz"
   >
     <a
       href="/product/abc123"

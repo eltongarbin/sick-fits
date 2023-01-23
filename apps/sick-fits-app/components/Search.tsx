@@ -27,7 +27,7 @@ const SEARCH_PRODUCTS_QUERY = gql`
   }
 `;
 
-export default function Search() {
+export const Search = () => {
   const router = useRouter();
   const [findItems, { loading, data }] = useLazyQuery(SEARCH_PRODUCTS_QUERY, {
     fetchPolicy: 'no-cache',
@@ -69,13 +69,13 @@ export default function Search() {
             type: 'search',
             placeholder: 'Search for an Item',
             id: 'search',
-            className: loading ? 'loading' : null,
+            className: loading ? 'loading' : undefined,
           })}
         />
       </div>
       <DropDown {...getMenuProps()}>
         {isOpen &&
-          items.map((item, index) => (
+          items.map((item: any, index: number) => (
             <DropDownItem
               {...getItemProps({ item, index })}
               key={item.id}
@@ -95,4 +95,4 @@ export default function Search() {
       </DropDown>
     </SearchStyles>
   );
-}
+};

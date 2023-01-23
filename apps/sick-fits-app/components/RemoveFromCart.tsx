@@ -21,14 +21,16 @@ const REMOVE_FROM_CART_MUTATION = gql`
   }
 `;
 
-function update(cache, payload) {
-  cache.evict(cache.identify(payload.data.deleteCartItem));
-}
+type RemoveFromCartProps = {
+  id: string;
+};
 
-export default function RemoveFromCart({ id }) {
+export const RemoveFromCart = ({ id }: RemoveFromCartProps) => {
   const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
     variables: { id },
-    update,
+    update(cache, payload) {
+      cache.evict({ id: cache.identify(payload.data.deleteCartItem) });
+    },
   });
 
   return (
@@ -41,4 +43,4 @@ export default function RemoveFromCart({ id }) {
       &times;
     </BigButton>
   );
-}
+};

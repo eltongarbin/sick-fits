@@ -1,15 +1,20 @@
-import { createContext, useContext, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 const LocalStateContext = createContext({
   cartOpen: false,
-  toggleCart: null,
-  closeCart: null,
-  openCart: null,
+  toggleCart: () => {},
+  closeCart: () => {},
+  openCart: () => {},
 });
 
 const { Provider: LocalStateProvider } = LocalStateContext;
 
-export function CartStateProvider({ children }) {
+type CartStateProviderProps = {
+  children: ReactNode;
+};
+
+export function CartStateProvider({ children }: CartStateProviderProps) {
   const [cartOpen, setCartOpen] = useState(false);
 
   const toggleCart = () => setCartOpen(!cartOpen);

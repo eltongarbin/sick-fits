@@ -42,20 +42,22 @@ const AnimationStyles = styled.span`
   }
 `;
 
-export default function CartCount({ count }) {
-  return (
-    <AnimationStyles>
-      <TransitionGroup>
-        <CSSTransition
-          unmountOnExit
-          className="count"
-          classNames="count"
-          key={count}
-          timeout={{ enter: 400, exit: 400 }}
-        >
-          <Dot>{count}</Dot>
-        </CSSTransition>
-      </TransitionGroup>
-    </AnimationStyles>
-  );
-}
+type CartCountProps = {
+  count: number;
+};
+
+export const CartCount = ({ count }: CartCountProps) => (
+  <AnimationStyles>
+    <TransitionGroup>
+      <CSSTransition
+        unmountOnExit
+        className="count"
+        classNames="count"
+        key={count}
+        timeout={{ enter: 400, exit: 400 }}
+      >
+        <Dot>{count}</Dot>
+      </CSSTransition>
+    </TransitionGroup>
+  </AnimationStyles>
+);

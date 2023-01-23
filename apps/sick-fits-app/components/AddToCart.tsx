@@ -14,7 +14,7 @@ type AddToCartProps = {
   id: string;
 };
 
-export default function AddToCart({ id }: AddToCartProps) {
+export const AddToCart = ({ id }: AddToCartProps) => {
   const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
     variables: { id },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
@@ -25,4 +25,4 @@ export default function AddToCart({ id }: AddToCartProps) {
       Add{loading && 'ing'} To Cart 🛒
     </button>
   );
-}
+};

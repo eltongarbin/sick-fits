@@ -7,11 +7,11 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import nProgress from 'nprogress';
 import { useRouter } from 'next/dist/client/router';
 
-import SickButton from './styles/SickButton';
+import { SickButton } from './styles/SickButton';
 import { useCart } from '../lib/cartState';
 import { CURRENT_USER_QUERY } from './User';
 
@@ -37,9 +37,9 @@ const CREATE_ORDER_MUTATION = gql`
   }
 `;
 
-const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY || '');
 
-function CheckoutForm() {
+const CheckoutForm = () => {
   const [error, setError] = useState<StripeError>();
   const [, setLoading] = useState(false);
   const stripe = useStripe();
@@ -53,15 +53,15 @@ function CheckoutForm() {
     }
   );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     setLoading(true);
     nProgress.start();
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe!.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
+      card: elements!.getElement(CardElement)!,
     });
 
     if (error) {
@@ -97,12 +97,10 @@ function CheckoutForm() {
       <SickButton>Check Out Now</SickButton>
     </CheckoutFormStyles>
   );
-}
+};
 
-export function Checkout() {
-  return (
-    <Elements stripe={stripeLib}>
-      <CheckoutForm />
-    </Elements>
-  );
-}
+export const Checkout = () => (
+  <Elements stripe={stripeLib}>
+    <CheckoutForm />
+  </Elements>
+);

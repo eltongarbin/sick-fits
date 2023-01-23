@@ -30,6 +30,13 @@
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "excludedFiles": ["**/pages/**/*"],
+      "rules": {
+        "import/no-default-export": "error"
+      }
     }
   ]
 }

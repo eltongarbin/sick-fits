@@ -1,14 +1,25 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpOptions,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 
 import { endpoint, prodEndpoint } from '../config';
-import paginationField from './paginationField';
+import { paginationField } from './paginationField';
 
-function createClient({ headers, initialState }) {
-  return new ApolloClient({
+type CreateClientOpts = {
+  headers?: HttpOptions['headers'];
+  initialState?: NormalizedCacheObject;
+};
+
+const createClient = ({ headers, initialState }: CreateClientOpts) =>
+  new ApolloClient({
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
@@ -44,6 +55,5 @@ function createClient({ headers, initialState }) {
       },
     }).restore(initialState || {}),
   });
-}
 
-export default withApollo(createClient, { getDataFromTree });
+export const withData = withApollo(createClient, { getDataFromTree });

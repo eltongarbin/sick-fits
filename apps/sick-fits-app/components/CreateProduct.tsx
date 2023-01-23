@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import Router from 'next/router';
 
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import DisplayError from './ErrorMessage';
+import { useForm } from '../lib/useForm';
+import { Form } from './styles/Form';
+import { ErrorMessage } from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
 
 export const CREATE_PRODUCT_MUTATION = gql`
@@ -31,7 +31,7 @@ export const CREATE_PRODUCT_MUTATION = gql`
   }
 `;
 
-export default function CreateProduct() {
+export const CreateProduct = () => {
   const { inputs, handleChange, clearForm }: any = useForm({
     image: '',
     name: '',
@@ -56,7 +56,7 @@ export default function CreateProduct() {
 
   return (
     <Form>
-      <DisplayError error={error} />
+      <ErrorMessage error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="image">
           Image
@@ -107,4 +107,4 @@ export default function CreateProduct() {
       </fieldset>
     </Form>
   );
-}
+};

@@ -3,8 +3,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 
-import PaginationStyles from './styles/PaginationStyles';
-import DisplayError from './ErrorMessage';
+import { PaginationStyles } from './Pagination.styles';
+import { ErrorMessage } from './ErrorMessage';
 import { perPage } from '../config';
 
 export const PAGINATION_QUERY = gql`
@@ -13,11 +13,15 @@ export const PAGINATION_QUERY = gql`
   }
 `;
 
-export default function Pagination({ page }) {
+type PaginationProps = {
+  page: number;
+};
+
+export const Pagination = ({ page }: PaginationProps) => {
   const { data, loading, error } = useQuery(PAGINATION_QUERY);
 
   if (loading) return <>Loading...</>;
-  if (error) return <DisplayError error={error} />;
+  if (error) return <ErrorMessage error={error} />;
 
   const count = data.productsCount;
   const pageCount = Math.ceil(count / perPage);
@@ -41,4 +45,4 @@ export default function Pagination({ page }) {
       </Link>
     </PaginationStyles>
   );
-}
+};

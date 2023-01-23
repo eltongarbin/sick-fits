@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CartStyles = styled.div<{ open: boolean }>`
+export const CartStyles = styled.div<{ open: boolean }>`
   padding: 20px;
   position: relative;
   background: white;
@@ -29,8 +29,6 @@ const CartStyles = styled.div<{ open: boolean }>`
     border-top: 10px double var(--black);
     margin-top: 2rem;
     padding-top: 2rem;
-    /* display: grid;
-    grid-template-columns: auto auto; */
     align-items: center;
     font-size: 3rem;
     font-weight: 900;
@@ -47,5 +45,3 @@ const CartStyles = styled.div<{ open: boolean }>`
     overflow: scroll;
   }
 `;
-
-export default CartStyles;

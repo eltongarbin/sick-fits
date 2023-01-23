@@ -13,7 +13,8 @@
         "@next/next/no-html-link-for-pages": [
           "error",
           "apps/sick-fits-app/pages"
-        ]
+        ],
+        "@import/no-default-export": ["off", "apps/sick-fits-app/pages"]
       }
     },
     {

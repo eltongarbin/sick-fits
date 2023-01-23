@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import { SyntheticEvent } from 'react';
 
-import Form from './styles/Form';
-import useForm from '../lib/useForm';
-import Error from './ErrorMessage';
+import { Form } from './styles/Form';
+import { useForm } from '../lib/useForm';
+import { ErrorMessage } from './ErrorMessage';
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
@@ -22,7 +23,11 @@ const RESET_MUTATION = gql`
   }
 `;
 
-export default function Reset({ token }) {
+type ResetProps = {
+  token: string;
+};
+
+export const Reset = ({ token }: ResetProps) => {
   const { inputs, handleChange, resetForm }: any = useForm({
     email: '',
     token,
@@ -36,7 +41,7 @@ export default function Reset({ token }) {
     data?.redeemUserPasswordResetToken?.code &&
     data?.redeemUserPasswordResetToken;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     await reset().catch(console.error);
     resetForm();
@@ -45,7 +50,7 @@ export default function Reset({ token }) {
   return (
     <Form method="POST" onSubmit={handleSubmit}>
       <h2>Reset Your Password</h2>
-      <Error error={error || formattedError} />
+      <ErrorMessage error={error || formattedError} />
       <fieldset>
         {data?.redeemUserPasswordResetToken === null && (
           <p>Success! You can Now sign in</p>
@@ -76,4 +81,4 @@ export default function Reset({ token }) {
       </fieldset>
     </Form>
   );
-}
+};

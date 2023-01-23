@@ -1,6 +1,5 @@
+import { ApolloError, ServerError } from '@apollo/client';
 import styled from 'styled-components';
-import React from 'react';
-import PropTypes from 'prop-types';
 
 const ErrorStyles = styled.div`
   padding: 2rem;
@@ -19,14 +18,24 @@ const ErrorStyles = styled.div`
   }
 `;
 
-const DisplayError = ({ error }) => {
+function isServerError(
+  networkError: ApolloError['networkError']
+): networkError is ServerError {
+  return (networkError as ServerError)?.result !== undefined;
+}
+
+type DisplayErrorProps = {
+  error?: ApolloError;
+};
+
+export const ErrorMessage = ({ error }: DisplayErrorProps) => {
   if (!error || !error.message) return null;
+
   if (
-    error.networkError &&
-    error.networkError.result &&
+    isServerError(error.networkError) &&
     error.networkError.result.errors.length
   ) {
-    return error.networkError.result.errors.map((error, i) => (
+    return error.networkError.result.errors.map((error: Error, i: number) => (
       <ErrorStyles key={i}>
         <p data-testid="graphql-error">
           <strong>Shoot!</strong>
@@ -35,6 +44,7 @@ const DisplayError = ({ error }) => {
       </ErrorStyles>
     ));
   }
+
   return (
     <ErrorStyles>
       <p data-testid="graphql-error">
@@ -44,13 +54,3 @@ const DisplayError = ({ error }) => {
     </ErrorStyles>
   );
 };
-
-DisplayError.defaultProps = {
-  error: {},
-};
-
-DisplayError.propTypes = {
-  error: PropTypes.object,
-};
-
-export default DisplayError;

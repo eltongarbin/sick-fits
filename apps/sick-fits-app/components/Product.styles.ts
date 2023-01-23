@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ItemStyles = styled.div`
+export const ProductStyles = styled.div`
   background: white;
   border: 1px solid var(--offWhite);
   box-shadow: var(--bs);
@@ -37,5 +37,3 @@ const ItemStyles = styled.div`
     }
   }
 `;
-
-export default ItemStyles;

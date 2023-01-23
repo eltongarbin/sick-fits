@@ -19,7 +19,7 @@ const fakeItem = () => ({
   description: 'dogs',
 });
 
-const fakeUser = (overrides) => ({
+const fakeUser = (overrides?: Record<string, unknown>) => ({
   __typename: 'User',
   id: '4234',
   name: casual.name,
@@ -52,7 +52,7 @@ const fakeOrder = () => ({
   user: fakeUser(),
 });
 
-const fakeCartItem = (overrides) => ({
+const fakeCartItem = (overrides?: Record<string, unknown>) => ({
   __typename: 'CartItem',
   id: 'omg123',
   quantity: 3,
@@ -63,39 +63,35 @@ const fakeCartItem = (overrides) => ({
 
 // Fake LocalStorage
 class LocalStorageMock {
-  constructor() {
-    this.store = {};
-  }
+  store: Record<string, string> = {};
 
   clear() {
     this.store = {};
   }
 
-  getItem(key) {
+  getItem(key: string) {
     return this.store[key] || null;
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: string) {
     this.store[key] = value.toString();
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     delete this.store[key];
   }
 }
 
-function makePaginationMocksFor(length) {
-  return [
-    {
-      request: { query: PAGINATION_QUERY },
-      result: {
-        data: {
-          productsCount: length,
-        },
+const makePaginationMocksFor = (length: number) => [
+  {
+    request: { query: PAGINATION_QUERY },
+    result: {
+      data: {
+        productsCount: length,
       },
     },
-  ];
-}
+  },
+];
 
 export {
   makePaginationMocksFor,

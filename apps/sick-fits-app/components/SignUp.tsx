@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
-import Form from './styles/Form';
-import useForm from '../lib/useForm';
-import Error from './ErrorMessage';
+import { Form } from './styles/Form';
+import { useForm } from '../lib/useForm';
+import { ErrorMessage } from './ErrorMessage';
+import { SyntheticEvent } from 'react';
 
 export const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -19,7 +20,7 @@ export const SIGNUP_MUTATION = gql`
   }
 `;
 
-export default function SignUp() {
+export const SignUp = () => {
   const { inputs, handleChange, resetForm }: any = useForm({
     name: '',
     email: '',
@@ -29,7 +30,7 @@ export default function SignUp() {
     variables: inputs,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     await signup().catch(console.error);
     resetForm();
@@ -38,7 +39,7 @@ export default function SignUp() {
   return (
     <Form method="POST" onSubmit={handleSubmit}>
       <h2>Sign Up For an Account</h2>
-      <Error error={error} />
+      <ErrorMessage error={error} />
       <fieldset>
         {data?.createUser && (
           <p>
@@ -85,4 +86,4 @@ export default function SignUp() {
       </fieldset>
     </Form>
   );
-}
+};

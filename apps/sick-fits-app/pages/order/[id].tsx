@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import ErrorMessage from '../../components/ErrorMessage';
-import OrderStyles from '../../components/styles/OrderStyles';
-import formatMoney from '../../lib/formatMoney';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { OrderStyles } from '../../components/styles/OrderStyles';
+import { formatMoney } from '../../lib/formatMoney';
 
 const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
@@ -67,7 +67,7 @@ export default function SingleOrderPage() {
         <span>{order.items.length}</span>
       </p>
       <div className="items">
-        {order.items.map((item) => (
+        {order.items.map((item: any) => (
           <div className="order-item" key={item.id}>
             <img src={item.photo.image.publicUrlTransformed} alt={item.title} />
             <div className="item-details">

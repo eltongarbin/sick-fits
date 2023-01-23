@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import { perPage } from '../config';
-import Product from './Product';
+import { Product } from './Product';
 
 export const ALL_PRODUCTS_QUERY = gql`
   query ALL_PRODUCTS_QUERY($skip: Int = 0, $take: Int) {
@@ -28,7 +28,11 @@ const ProductsListStyles = styled.div`
   grid-gap: 60px;
 `;
 
-export default function Products({ page }) {
+type Products = {
+  page: number;
+};
+
+export const Products = ({ page }: Products) => {
   const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
     variables: {
       skip: page * perPage - perPage,
@@ -42,10 +46,10 @@ export default function Products({ page }) {
   return (
     <div>
       <ProductsListStyles>
-        {data.products.map((product) => (
+        {data.products.map((product: any) => (
           <Product key={product.id} product={product} />
         ))}
       </ProductsListStyles>
     </div>
   );
-}
+};

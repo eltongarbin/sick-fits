@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 
-import Pagination from '../../components/Pagination';
-import Products from '../../components/Products';
+import { Pagination } from '../../components/Pagination';
+import { Products } from '../../components/Products';
 
 export default function ProductsPage() {
   const { query } = useRouter();
-  const page = parseInt(query.page?.toString()) || 1;
+  const page = parseInt(query.page?.toString() || '1');
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
+import { ReactNode } from 'react';
 
 const DELETE_PRODUCT_MUTATION = gql`
   mutation DELETE_PRODUCT_MUTATION($id: ID!) {
@@ -10,14 +11,17 @@ const DELETE_PRODUCT_MUTATION = gql`
   }
 `;
 
-function update(cache, { data: { deleteProduct } }) {
-  cache.evict(cache.identify(deleteProduct));
-}
+type DeleteProductProps = {
+  id: string;
+  children: ReactNode;
+};
 
-export default function DeleteProduct({ id, children }) {
+export const DeleteProduct = ({ id, children }: DeleteProductProps) => {
   const [deleteProduct, { loading }] = useMutation(DELETE_PRODUCT_MUTATION, {
     variables: { id },
-    update,
+    update(cache, { data: { deleteProduct } }) {
+      cache.evict({ id: cache.identify(deleteProduct) });
+    },
   });
 
   return (
@@ -33,4 +37,4 @@ export default function DeleteProduct({ id, children }) {
       {children}
     </button>
   );
-}
+};

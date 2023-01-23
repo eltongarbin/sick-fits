@@ -1,36 +1,46 @@
+import { ApolloCache } from '@apollo/client';
 import { PAGINATION_QUERY } from '../components/Pagination';
 
-export default function paginationField() {
-  return {
-    keyArgs: false, // tells apollo we will take care of everything
-    read(existing = [], { args, cache }) {
-      const { skip, first } = args;
+type Args = {
+  skip: number;
+  first: number;
+};
 
-      const data = cache.readQuery({ query: PAGINATION_QUERY });
-      const count = data?.productsCount?.count;
-      const page = skip / first + 1;
-      const pages = Math.ceil(count / first);
+export const paginationField = () => ({
+  keyArgs: false, // tells apollo we will take care of everything
+  read(
+    existing = [],
+    { args, cache }: { args: Args; cache: ApolloCache<any> }
+  ) {
+    const { skip, first } = args;
 
-      const items = existing.slice(skip, skip + first).filter((x) => x);
+    const data = cache.readQuery<any>({ query: PAGINATION_QUERY });
+    const count = data?.productsCount?.count;
+    const page = skip / first + 1;
+    const pages = Math.ceil(count / first);
 
-      if (items.length && items.length !== first && page === pages)
-        return items;
+    const items = existing.slice(skip, skip + first).filter((x) => x);
 
-      if (items.length !== first) return false;
+    if (items.length && items.length !== first && page === pages) return items;
 
-      if (items.length) return items;
+    if (items.length !== first) return false;
 
-      return false;
-    },
-    merge(existing, incoming, { args }) {
-      // This runs when the Apollo client comes back from the network with our product
-      const { skip } = args;
-      const merged = existing ? existing.slice(0) : [];
+    if (items.length) return items;
 
-      for (let i = skip; i < skip + incoming.length; ++i)
-        merged[i] = incoming[i - skip];
+    return false;
+  },
+  merge(
+    existing: unknown[] | undefined,
+    incoming: unknown[],
+    { args }: { args: Args }
+  ) {
+    // This runs when the Apollo client comes back from the network with our product
+    const { skip } = args;
+    const merged = existing ? existing.slice(0) : [];
 
-      return merged;
-    },
-  };
-}
+    for (let i = skip; i < +incoming.length; ++i)
+      merged[i] = incoming[i - skip];
+
+    return merged;
+  },
+});

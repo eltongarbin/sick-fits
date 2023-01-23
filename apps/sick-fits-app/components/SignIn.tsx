@@ -1,10 +1,11 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
-import Form from './styles/Form';
-import Error from './ErrorMessage';
-import useForm from '../lib/useForm';
+import { Form } from './styles/Form';
+import { ErrorMessage } from './ErrorMessage';
+import { useForm } from '../lib/useForm';
 import { CURRENT_USER_QUERY } from './User';
+import { SyntheticEvent } from 'react';
 
 const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -23,7 +24,7 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
-export default function SignIn() {
+export const SignIn = () => {
   const { inputs, handleChange, resetForm }: any = useForm({
     email: '',
     password: '',
@@ -33,7 +34,7 @@ export default function SignIn() {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     await signin();
     resetForm();
@@ -47,7 +48,7 @@ export default function SignIn() {
   return (
     <Form method="POST" onSubmit={handleSubmit}>
       <h2>Sign Into Your Account</h2>
-      <Error error={error} />
+      <ErrorMessage error={error} />
       <fieldset>
         <label htmlFor="email">
           Email
@@ -75,4 +76,4 @@ export default function SignIn() {
       </fieldset>
     </Form>
   );
-}
+};
